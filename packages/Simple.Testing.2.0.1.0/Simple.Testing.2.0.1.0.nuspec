@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Simple.Testing</id>
+    <version>2.0.1.0</version>
+    <title>Simple.Testing</title>
+    <authors>Greg Young</authors>
+    <owners>Greg Young</owners>
+    <licenseUrl>https://raw.github.com/gregoryyoung/grensesnitt/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/gregoryyoung/Simple.Testing</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Simple Specification Framework.</description>
+    <summary>Simple Specification Framework.</summary>
+    <releaseNotes />
+    <copyright />
+    <language />
+    <tags>test testing bdd tdd</tags>
+  </metadata>
+</package>
