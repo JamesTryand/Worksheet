@@ -170,6 +170,24 @@ namespace Worksheet.Specs
                 }
             };
         }
+
+        public Specification CanDefineMultipleMeasuresFromASingleBuilder()
+        {
+            return new QuerySpecification<MeasureBuilder, IEnumerable<Measure>>()
+            {
+                On = () => new MeasureBuilder().What(new Scope("what", Dimension.What)).When(new Scope("when", Dimension.When)).Where(new Scope("where", Dimension.Where)),
+                When = builder => new[] { "Bob", "John", "Sam" }.Select(name => (Measure)(builder.WithName(name))),
+                Expect =
+                {
+                    measures => measures != null,
+                    measures => measures.Count() == 3,
+                    measures => measures.OrderBy(measure => measure.Who).First().Who == "Bob",
+                    measures => measures.All(measure => measure.What == new Scope("what",Dimension.What)),
+                    measures => measures.All(measure => measure.When == new Scope("when",Dimension.When)),
+                    measures => measures.All(measure => measure.Where == new Scope("where",Dimension.Where)),
+                }
+            };
+        }
     }
 
 }
