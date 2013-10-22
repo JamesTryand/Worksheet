@@ -143,13 +143,15 @@ namespace Worksheet.Specs
                     what: new Scope("what", Dimension.What),
                     when: new Scope("when", Dimension.When),
                     where: new Scope("where", Dimension.Where)),
+                    why: new Scope("why", Dimension.Why)),
                 Expect =
                 {
                     measure => measure is Measure,
                     measure => measure.Who == "Bob",
                     measure => measure.What == new Scope("what", Dimension.What),
                     measure => measure.When == new Scope("when", Dimension.When),
-                    measure => measure.Where == new Scope("where", Dimension.Where)
+                    measure => measure.Where == new Scope("where", Dimension.Where),
+                    measure => measure.Why == new Scope("why", Dimension.Why),
                 }
             };                       
         }
@@ -158,7 +160,7 @@ namespace Worksheet.Specs
         {
             return new QuerySpecification<MeasureBuilder, Measure>()
             {
-                On = () => new MeasureBuilder().What(new Scope("what", Dimension.What)).When(new Scope("when", Dimension.When)).Where(new Scope("where", Dimension.Where)),
+                On = () => new MeasureBuilder().What(new Scope("what", Dimension.What)).When(new Scope("when", Dimension.When)).Where(new Scope("where", Dimension.Where)).WithContext(new Scope("why", Dimension.Why)),
                 When = builder => (Measure)(builder.WithName("Bob")),
                 Expect =
                 {
@@ -167,6 +169,7 @@ namespace Worksheet.Specs
                     result => result.What == new Scope("what",Dimension.What),
                     result => result.When == new Scope("when",Dimension.When),
                     result => result.Where == new Scope("where",Dimension.Where),
+                    result => result.Why == new Scope("why",Dimension.Why),
                 }
             };
         }
@@ -175,7 +178,7 @@ namespace Worksheet.Specs
         {
             return new QuerySpecification<MeasureBuilder, IEnumerable<Measure>>()
             {
-                On = () => new MeasureBuilder().What(new Scope("what", Dimension.What)).When(new Scope("when", Dimension.When)).Where(new Scope("where", Dimension.Where)),
+                On = () => new MeasureBuilder().What(new Scope("what", Dimension.What)).When(new Scope("when", Dimension.When)).Where(new Scope("where", Dimension.Where)).WithContext(new Scope("why", Dimension.Why)),
                 When = builder => new[] { "Bob", "John", "Sam" }.Select(name => (Measure)(builder.WithName(name))),
                 Expect =
                 {
@@ -185,6 +188,7 @@ namespace Worksheet.Specs
                     measures => measures.All(measure => measure.What == new Scope("what",Dimension.What)),
                     measures => measures.All(measure => measure.When == new Scope("when",Dimension.When)),
                     measures => measures.All(measure => measure.Where == new Scope("where",Dimension.Where)),
+                    measures => measures.All(measure => measure.Why == new Scope("why",Dimension.Why)),
                 }
             };
         }

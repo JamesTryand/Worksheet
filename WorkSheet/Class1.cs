@@ -71,13 +71,15 @@ namespace WorkSheet
         public readonly Scope What;
         public readonly Scope When;
         public readonly Scope Where;
+        public readonly Scope Why;
 
-        public Measure(string who, Scope what, Scope when, Scope where)
+        public Measure(string who, Scope what, Scope when, Scope where, Scope why)
         {
             Who = who;
             What = what;
             When = when;
             Where = where;
+            Why = why;
         }
     }
 
@@ -103,11 +105,17 @@ namespace WorkSheet
             this.where = where;
             return this;
         }
+        public MeasureBuilder WithContext(Scope why)
+        {
+            this.why = why;
+            return this;
+        }
 
         private string who;
         private Scope what;
         private Scope when;
         private Scope where;
+        private Scope why;
 
         public static implicit operator Measure(MeasureBuilder builder)
         {
@@ -115,7 +123,8 @@ namespace WorkSheet
                 who: builder.who ?? "",
                 what: builder.what ?? Scope.None,
                 when: builder.when ?? Scope.None,
-                where: builder.where ?? Scope.None);
+                where: builder.where ?? Scope.None,
+                why: builder.why ?? Scope.None);
         }
 
 
@@ -126,6 +135,7 @@ namespace WorkSheet
             if (builder.What != Scope.None) { b.What(builder.What); }
             if (builder.When != Scope.None) { b.When(builder.When); }
             if (builder.Where != Scope.None) { b.Where(builder.Where); }
+            if (builder.Why != Scope.None) { b.Where(builder.Why); }
             return b;
         }
     }
