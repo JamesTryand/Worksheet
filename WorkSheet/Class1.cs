@@ -65,4 +65,68 @@ namespace WorkSheet
         }
 
     }
+    public class Measure
+    {
+        public readonly string Who;
+        public readonly Scope What;
+        public readonly Scope When;
+        public readonly Scope Where;
+
+        public Measure(string who, Scope what, Scope when, Scope where)
+        {
+            Who = who;
+            What = what;
+            When = when;
+            Where = where;
+        }
+    }
+
+    public class MeasureBuilder
+    {
+        public MeasureBuilder WithName(string who)
+        {
+            this.who = who;
+            return this;
+        }
+        public MeasureBuilder What(Scope what)
+        {
+            this.what = what;
+            return this;
+        }
+        public MeasureBuilder When(Scope when)
+        {
+            this.when = when;
+            return this;
+        }
+        public MeasureBuilder Where(Scope where)
+        {
+            this.where = where;
+            return this;
+        }
+
+        private string who;
+        private Scope what;
+        private Scope when;
+        private Scope where;
+
+        public static implicit operator Measure(MeasureBuilder builder)
+        {
+            return new Measure(
+                who: builder.who ?? "",
+                what: builder.what ?? Scope.None,
+                when: builder.when ?? Scope.None,
+                where: builder.where ?? Scope.None);
+        }
+
+
+        public static implicit operator MeasureBuilder(Measure builder)
+        {
+            var b = new MeasureBuilder();
+            if (!string.IsNullOrWhiteSpace(builder.Who)) { b.WithName(builder.Who); }
+            if (builder.What != Scope.None) { b.What(builder.What); }
+            if (builder.When != Scope.None) { b.When(builder.When); }
+            if (builder.Where != Scope.None) { b.Where(builder.Where); }
+            return b;
+        }
+    }
 }

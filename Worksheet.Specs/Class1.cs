@@ -151,23 +151,25 @@ namespace Worksheet.Specs
                     measure => measure.When == new Scope("when", Dimension.When),
                     measure => measure.Where == new Scope("where", Dimension.Where)
                 }
+            };                       
+        }
+
+        public Specification CanDefineAMeasureInStages()
+        {
+            return new QuerySpecification<MeasureBuilder, Measure>()
+            {
+                On = () => new MeasureBuilder().What(new Scope("what", Dimension.What)).When(new Scope("when", Dimension.When)).Where(new Scope("where", Dimension.Where)),
+                When = builder => (Measure)(builder.WithName("Bob")),
+                Expect =
+                {
+                    result => result is Measure,
+                    result => result.Who == "Bob",
+                    result => result.What == new Scope("what",Dimension.What),
+                    result => result.When == new Scope("when",Dimension.When),
+                    result => result.Where == new Scope("where",Dimension.Where),
+                }
             };
         }
     }
 
-    public class Measure
-    {
-        public readonly string Who;
-        public readonly Scope What;
-        public readonly Scope When;
-        public readonly Scope Where;
-
-        public Measure(string who = "", Scope what = Scope.None, Scope when = Scope.None, Scope where = Scope.None)
-        {
-            Who = who;
-            What = what;
-            When = when;
-            Where = where;
-        }
-    }
 }
