@@ -8,11 +8,11 @@ namespace WorkSheet
 
     public enum Dimension
     {
-        Who,
-        What,
-        Why,
-        When,
-        Where,
+        Who, // who is entering the data, person/team
+        What, // the thing being audited
+        Why, // the context with which this is happening
+        When, // the time/date / timespan for entering the data
+        Where, // the physical location of where the data is being entered
 
     }
 

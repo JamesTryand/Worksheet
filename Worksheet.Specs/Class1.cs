@@ -142,7 +142,7 @@ namespace Worksheet.Specs
                     who: "Bob",
                     what: new Scope("what", Dimension.What),
                     when: new Scope("when", Dimension.When),
-                    where: new Scope("where", Dimension.Where)),
+                    where: new Scope("where", Dimension.Where),
                     why: new Scope("why", Dimension.Why)),
                 Expect =
                 {
@@ -192,6 +192,16 @@ namespace Worksheet.Specs
                 }
             };
         }
+    }
+
+    public class AMeasureCanBeTicked
+    {
+
+    }
+
+    public class ACollectionOfRelatedMeasuresIsAForm
+    {
+
     }
 
 }
