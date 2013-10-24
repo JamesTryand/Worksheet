@@ -194,9 +194,65 @@ namespace Worksheet.Specs
         }
     }
 
+
+    /// <summary>
+    /// This needs to be reworked to ensure that the value is stored
+    /// </summary>
     public class AMeasureCanBeTicked
     {
+        public Specification CanTickAMeasure()
+        {
+            return new QuerySpecification<MeasureTickBuilder, Tick<bool>>()
+            {
+                On = () => new MeasureTickBuilder(
+                    who: "Bob",
+                    what: new Scope("wat", Dimension.What),
+                    when: new Scope("wen", Dimension.When),
+                    where: new Scope("where", Dimension.Where),
+                    why: new Scope("why", Dimension.Why),
+                    tickTime: DateTime.Now,
+                    tickUser: "Jeff"),
+                When = source =>
+                    new Tick<bool>(
+                        true,
+                        source.Measure,
+                        source.DateTime,
+                        source.User),
+                Expect =
+                {
 
+                }
+            };
+        }
+    }
+
+    public class MeasureTickBuilder
+    {
+        public Measure Measure { get; private set; }
+        public DateTime DateTime { get; private set; }
+        public string User { get; private set; }
+
+        public MeasureTickBuilder(string who, Scope what, Scope when, Scope where, Scope why, DateTime tickTime, string tickUser)
+        {
+            this.Measure = new Measure(who, what, when, where, why);
+            this.DateTime = tickTime;
+            this.User = tickUser;
+        }
+    }
+
+    public class Tick<T>
+    {
+        public T Record { get; private set; }
+        public DateTime DateTime { get; private set; }
+        public string User { get; private set; }
+        public Measure Measure { get; private set; }
+        public Tick(T record, Measure measure, DateTime dateTime, string user)
+        {
+            Record = record;
+            Measure = measure;
+            DateTime = dateTime;
+            User = user;
+        }
     }
 
     public class ACollectionOfRelatedMeasuresIsAForm
@@ -204,4 +260,5 @@ namespace Worksheet.Specs
 
     }
 
+    // Sparse tables
 }
