@@ -226,6 +226,7 @@ namespace Worksheet.Specs
         }
     }
 
+
     public class MeasureTickBuilder
     {
         public Measure Measure { get; private set; }

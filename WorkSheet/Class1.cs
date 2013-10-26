@@ -16,6 +16,15 @@ namespace WorkSheet
 
     }
 
+    public struct MeasureKey
+    {
+        public string Who;
+        public string What;
+        public string Why;
+        public string When; // This specific scope needs to be nailed down properly
+        public string Where;
+
+    }
 
 
     public class Scope
@@ -62,6 +71,21 @@ namespace WorkSheet
         public Scope RemoveParentScope()
         {
             return AssignParent(Scope.None);
+        }
+
+        private string _fullname = "";
+        public string FullName
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_fullname))
+                {
+                    _fullname = ParentScope != null && ParentScope != Scope.None
+                        ? ParentScope.FullName + @"/" + Name
+                        : Name;
+                }
+                return _fullname;
+            }
         }
 
     }
