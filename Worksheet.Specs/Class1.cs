@@ -224,41 +224,41 @@ namespace Worksheet.Specs
                 }
             };
         }
-    }
 
-
-    public class MeasureTickBuilder
-    {
-        public Measure Measure { get; private set; }
-        public DateTime DateTime { get; private set; }
-        public string User { get; private set; }
-
-        public MeasureTickBuilder(string who, Scope what, Scope when, Scope where, Scope why, DateTime tickTime, string tickUser)
+        public Specification CanCheckAMeasure()
         {
-            this.Measure = new Measure(who, what, when, where, why);
-            this.DateTime = tickTime;
-            this.User = tickUser;
+            return new QuerySpecification<Measure, ICheck>
+            {
+                On = () => new MeasureBuilder()
+                    .What(new Scope("What", Dimension.What))
+                    .When(new Scope("When", Dimension.When))
+                    .Where(new Scope("Where", Dimension.Where))
+                    .WithName("Who")
+                    .WithContext(new Scope("Why", Dimension.Why)),
+                When = measure => new Check<string>(measure),
+                Expect =
+                {
+                    check => check is ICheck,
+                    check => check is Check<string>
+                }
+            };
         }
+    
     }
 
-    public class Tick<T>
+    public class ACheckIsATypedMeasure
     {
-        public T Record { get; private set; }
-        public DateTime DateTime { get; private set; }
-        public string User { get; private set; }
-        public Measure Measure { get; private set; }
-        public Tick(T record, Measure measure, DateTime dateTime, string user)
-        {
-            Record = record;
-            Measure = measure;
-            DateTime = dateTime;
-            User = user;
-        }
+        public Specification AStringCheckIsAMeasureOfAString;
     }
 
-    public class ACollectionOfRelatedMeasuresIsAForm
+    public class ACollectionOfRelatedChecksIsAForm
     {
+        public Specification AFormCanHaveACheckAddedToIt;
+    }
 
+    public class AWorkSheetIsAnInstanceOfAForm
+    {
+        public Specification AWorkSheetCanHaveATickForItsMeasure;
     }
 
     // Sparse tables

@@ -52,10 +52,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DomainSpecs\AdministratorBehaviours.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="DomainSpecs\ManagerBehaviours.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DomainSpecs\StaffBehaviours.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Worksheet.Infrastructure\Worksheet.Infrastructure.csproj">
+      <Project>{D2979E07-E18E-4206-9A85-EA4F88D3CDC2}</Project>
+      <Name>Worksheet.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Worksheet.UI\Worksheet.UI.csproj">
       <Project>{D3CB842D-B854-4F14-880E-244B9A24F4B7}</Project>
       <Name>Worksheet.UI</Name>

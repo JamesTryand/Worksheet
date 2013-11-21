@@ -163,4 +163,85 @@ namespace WorkSheet
             return b;
         }
     }
+
+
+
+    public class MeasureTickBuilder
+    {
+        public Measure Measure { get; private set; }
+        public DateTime DateTime { get; private set; }
+        public string User { get; private set; }
+
+        public MeasureTickBuilder(string who, Scope what, Scope when, Scope where, Scope why, DateTime tickTime, string tickUser)
+        {
+            this.Measure = new Measure(who, what, when, where, why);
+            this.DateTime = tickTime;
+            this.User = tickUser;
+        }
+
+        public MeasureTickBuilder(Measure measure, DateTime tickTime, string tickUser)
+        {
+            this.Measure = measure;
+            this.DateTime = tickTime;
+            this.User = tickUser;
+        }
+    }
+
+    public class Tick<T>
+    {
+        public T Record { get; private set; }
+        public DateTime DateTime { get; private set; }
+        public string User { get; private set; }
+        public Measure Measure { get; private set; }
+        public Tick(T record, Measure measure, DateTime dateTime, string user)
+        {
+            Record = record;
+            Measure = measure;
+            DateTime = dateTime;
+            User = user;
+        }
+    }
+
+
+    public interface ICheck { }
+
+    public class Check<T> : ICheck
+    {
+        public Measure Measure { get; private set; }
+        public Check(Measure measure)
+        {
+            Measure = measure;
+        }
+        public Tick<T> Tick(T value, DateTime datetime, string user)
+        {
+            return new Tick<T>(value, Measure, datetime, user);
+        }
+        public Tick<T> Tick(T value, string user)
+        {
+            return Tick(value, DateTime.Now, user);
+        }
+        
+    }
+
+    public class TemplateSchedule
+    {
+        private List<ICheck> checks = null;
+        public List<ICheck> Checks
+        {
+            get
+            {
+                if (checks == null)
+                {
+                    checks = new List<ICheck>();
+                }
+                return checks;
+            }
+        }
+        
+    }
+
+    public class Schedule
+    {
+
+    }
 }
